@@ -1,0 +1,9 @@
+This example shows how to use visitors in the QtArg. Exactly in this example
+I use visitor for implementing the argument with two parameters. For example,
+argument "-a, --arg" must have two parameters:
+
+visitor.exe --arg 1 2
+
+Here 1 and 2 are both parameters of the "-a, --arg" argument.
+
+Look at the code, there is all very simple. Enjoy it. Good luck.

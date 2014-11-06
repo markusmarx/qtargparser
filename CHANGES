@@ -1,0 +1,86 @@
+version 1.4.3 (2014.09.08)
+ * Added possibility to print help into string.
+ * Added possibility to not throw exception on help printing.
+ 
+version 1.4.2 (2013.11.22)
+ * Fixed help.
+ 
+version 1.4.1 (2013.11.15)
+ * Fixed help. Now unrequired arguments are marked with [ and ].
+
+version 1.4.0 (2013.10.21)
+ * Improved help. Now help prints with fixed line length (by default 79 symbols).
+   Line length can be changed.
+ * Now QtMultiArg can process more than one value defined with it.
+   Now user can type --arg value1, value2, value3 instead of
+   --arg value1 --arg value2 --arg value3. And commas are optional.
+ * Some another minor fixes.
+
+version 1.3.0 (2013.08.11)
+ * Refusal from MxxRu as build system. Now all build steps will do the qmake.
+ * Review code for work with Qt 5.
+
+version 1.2.1 (2012.05.18)
+ * Reviewed code for compilation with QT_NO_CAST_FROM_ASCII macro defined.
+
+version 1.2.0 (2012.04.25)
+ * Now QtArg without value and not defined already has value QVariant( false )
+ * QtMultiArg without value and not defined already has value QVariant( false )
+ * QtMultiArg without value and defined already has value QVariant( true )
+ * QtMultiArg with value has value QVariant( QList< QVariant< QString > > )
+
+version 1.1.2 (2012.04.11)
+
+ * Implemented ignore rest.
+ * Implemented counter for QtMultiArg (now you can write "-v 3" insted of "-v -v -v")
+
+version 1.1.1 (2011.04.11)
+
+ * Bug fixing: marking of the unrequired part of the name didn't work.
+ * Removed '{' and '}' before and after XOR argument in usage string.
+
+version 1.1.0 (2011.03.28)
+
+  * QtArgIface was expanded with new methods:
+    bool isWithValue() const,
+    QString longDescription() const,
+    QString getUsageString( const NamesList & namesList ),
+    QString getHelpString( const NamesList & namesList ).
+  * Were added "USAGE" string in the help.
+  * Were improved help system for the given argument as a paramter for -h,--help.
+    Now you can type with prefixes -, -- or without thew, in this way searching
+    will be produced for an argument name enstead of flag.
+  * QtArg was expanded with new method: void setLongDescription( const QString & desc ).
+    What allow to set long description of the argument for the help system.
+  * QtArgCmdLineIface was expanded with new methods:
+    bool isFlag( const QString & str ),
+    bool isArgument( const QString & str ).
+  * QtArgBaseException was expanded with new method: QString whatAsQString() const.
+  * Exception QtHelpHasPrintedEx was renamed to QtArgHelpHasPrinted.
+  * Now you need not explicitly add default printer to the QtArg. It's already defined.
+    But if you want to set your own printer you can to do it with method:
+    setPrinter( QtArgHelpPrinterIface * p ).
+  * Were revised QtArgHelpPrinterIface with accordance with new help system.
+    It's very important if you implement you own help systems or help printer.
+  * QtRequiredArgumentUnderXORMaskEx was renamed to QtArgRequiredArgumentUnderXORMaskEx.
+
+  Greet thanks to Pavel Lapshin and Aleksey Timofeyev for the help and ideas to this
+  version of the QtArg.
+
+version 1.0.4 (2010.10.08)
+
+  * Correctness of the exceptions.
+
+version 1.0.3 (2010.10.05)
+
+  * Fixed issue #2 (If one passes "--test=1" the program crashes with a segfault).
+  * Added support of flags with values without spaces ("-b5" for example).
+
+version 1.0.2 (2010.06.01)
+
+  * Fixed throwing exception on not required argument with option that not defined.
+
+version 1.0.1 (2010.03.18)
+
+  * Fixed compilation errors and warnings under QT 4.6 and GCC 4.4.3.
+  * Changed author's email.

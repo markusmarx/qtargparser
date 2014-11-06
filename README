@@ -1,0 +1,12 @@
+QtArg is a small C++ library based on the Qt
+for parsing command line arguments.
+
+REQUIREMENTS
+
+For compiling QtArg you should have installed:
+ * Qt 4 or higher framework (http://qt-project.org/)
+
+
+COMPILING
+
+ * Just run qmake and then jom or another make executable

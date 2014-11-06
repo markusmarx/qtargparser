@@ -1,0 +1,86 @@
+This example shows how to initialize command line arguments and how to parse that user presented.
+First of all you must know that practically all classes of the QtArg throws exceptions on errors
+and there is one specific exceptions that inform you about that that help was shown. This specific
+exception (QtArgHelpHasPrintedEx) is needed for processing program's logic that usually stops
+execution at this point.
+
+For parsing command line arguments you must instantiate QtArgCmdLine class with number of
+arguments in the command line and with array of arguments. Usually this is argc and argv.
+
+try {
+	QtArgCmdLine cmd( argc, argv );
+
+Then you have to instantiate QtArg classes or derived from it for each argument that your program
+will process. There is many constructors in the QtArg and derived classes on every occasional life.
+Look into the documentation for understanding it.
+
+Well let's look on the "one" argument. I have used for it class QtArg because this arguments is
+with one parameter. I have decided that this argument have to have two long names ( "--one" and
+"--and-one" ) without flags. Second argument is description that needed for printing short help.
+Third and fourth arguments are set to true that mean that this argument is required and have value
+(parameter).
+
+	QtArg one( QtArgIface::NamesList() << QLatin1String( "one" )
+			<< QLatin1String( "and-one" ),
+		QLatin1String( "one description" ), true, true );
+
+On the next line you can see that I set long description of the argument. This long description
+will shown when user will request help about exactly this argument. For example user can type
+"help.exe -h one" or "help.exe -h --one" and he will see description of this argument with his
+usage.
+
+	one.setLongDescription( QLatin1String( "This is a long description " ) +
+		QLatin1String( "of the \"one\" argument." ) );
+
+	QtArg two( QLatin1String( "two" ), QLatin1String( "two description" ) );
+
+Next two argument will be used under the XOR mask. That mean that only one of them can be
+presents in the command line.
+
+	QtArg a( QtArgIface::FlagsList() << QLatin1Char( 'a' )
+			<< QLatin1Char( 'c' ) << QLatin1Char( 'd' ),
+		QtArgIface::NamesList() << QLatin1String( "three-flags" ),
+		QLatin1String( "three flags description" ) );
+
+	QtArg b( QtArgIface::FlagsList() << QLatin1Char( 'b' )
+			<< QLatin1Char( 'e' ) << QLatin1Char( 'f' ),
+		QtArgIface::NamesList(), QLatin1String( "b description" ),
+		false, true );
+
+And here we say to the QtArg that arguments a and b will be under the XOR mask.
+
+	QtXorArg xored( a, b, QLatin1String( "xored" ) );
+
+Next step is to provide help opportunity to our application.
+
+	QtArgHelp help( &cmd );
+	help.printer()->setProgramDescription(
+		QLatin1String( "Testing help printing." ) );
+	help.printer()->setExecutableName( QLatin1String( argv[0] ) );
+
+And now we must add each argument to the instance of the QtArgCmdLine class. Without it
+command line parser will not know about our arguments.
+
+	cmd.addArg( one );
+	cmd.addArg( two );
+	cmd.addArg( xored );
+	cmd.addArg( help );
+
+And finally we invoke parse() method of the instanse of the our QtArgCmdLine class for parsing
+that that user presented.
+
+	cmd.parse();
+}
+catch( const QtArgHelpHasPrintedEx & x )
+{
+}
+
+For explanations of the possible errors we catching all exceptions derevied from QtArgBaseException
+and printing the reason of the problem.
+
+catch( const QtArgBaseException & x )
+{
+	qDebug() << x.what();
+}
+
+That's it. Use it and enjoy it. Good luck.
